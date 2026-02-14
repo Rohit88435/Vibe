@@ -9,7 +9,7 @@ const server = http.createServer(app); // server
 const io = new Server(server, {
   // server
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://vibe-rqrb.onrender.com",
     methods: ["GET", "POST"],
   },
 });
