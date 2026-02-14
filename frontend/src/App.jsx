@@ -10,7 +10,7 @@ import GetSuggestedUser from "./hooks/GetSuggestedUser";
 import Profile from "./Pages/Profile";
 import EditProfile from "./Pages/EditProfile";
 import Upload from "./Pages/Upload";
-import GetAllPost from "./hooks/getAllPost";
+import GetAllPost from "./hooks/GetAllPost";
 import Loops from "./Pages/Loops";
 import GetAllLoops from "./hooks/GetAllLoops";
 import Story from "./Pages/Story";
@@ -30,7 +30,7 @@ import { setSelectedUser, setMessages } from "./redux/messageSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 
-export const serverUrl = "http://localhost:8000";
+export const serverUrl = "https://vibe-backend-iu7n.onrender.com";
 function App() {
   GetCurrentUser();
   GetSuggestedUser();
