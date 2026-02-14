@@ -4,7 +4,6 @@ import { useState } from "react";
 import { LuSquarePlus } from "react-icons/lu";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import VideoPlayer from "../components/VideoPlayer";
 import axios from "axios";
 import { serverUrl } from "../App";
 import { ClipLoader } from "react-spinners";
@@ -13,6 +12,7 @@ import { setPostData } from "../redux/postSlice";
 import { setCurrentUserStory, setStoryData } from "../redux/storySlice";
 import { setLoopData } from "../redux/loopSlice";
 import { setUserData } from "../redux/UserSlice";
+import VideoPlayer from "../Components/VideoPlayer";
 
 function Upload() {
   const navigate = useNavigate();

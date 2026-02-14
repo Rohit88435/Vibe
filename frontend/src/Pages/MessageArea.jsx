@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import dp from "../assets/dp.webp";
 import { CiImageOn } from "react-icons/ci";
 import { IoSend } from "react-icons/io5";
-import SenderMessage from "../components/SenderMessage";
+import SenderMessage from "../Components/SenderMessage";
 import axios from "axios";
 import { serverUrl } from "../App";
 import { setMessages } from "../redux/messageSlice";
-import ReceiverMessage from "../components/ReceiverMessage";
+import ReceiverMessage from "../Components/ReceiverMessage";
 
 function MessageArea() {
   const { selectedUser, messages } = useSelector((state) => state.message);

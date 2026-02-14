@@ -1,5 +1,5 @@
 import React from "react";
-import LoopCard from "../components/LoopCard";
+import LoopCard from "../Components/LoopCard";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";

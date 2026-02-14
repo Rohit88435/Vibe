@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfileData, setUserData } from "../redux/UserSlice";
 import { useEffect } from "react";
 import { MdKeyboardBackspace } from "react-icons/md";
-import Nav from "../components/Nav";
-import FollowButton from "../components/FollowButton";
-import Post from "../components/Post";
+import Nav from "../Components/Nav";
+import FollowButton from "../Components/FollowButton";
+import Post from "../Components/Post";
 import { setSelectedUser } from "../redux/messageSlice";
 
 function Profile() {
