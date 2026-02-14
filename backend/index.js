@@ -13,9 +13,21 @@ import { app, server } from "./socket.js";
 dotenv.config();
 
 // middlewares
+const allowedOrigins = [
+  "http://localhost:5173",    // local dev
+  "http://localhost:8000",    // local backend
+  "https://vibe-rqrb.onrender.com", // production frontend
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed for this origin"));
+      }
+    },
     credentials: true,
   }),
 );

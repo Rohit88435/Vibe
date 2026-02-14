@@ -9,8 +9,12 @@ const server = http.createServer(app); // server
 const io = new Server(server, {
   // server
   cors: {
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173", // local dev
+      "https://vibe-rqrb.onrender.com", // production frontend
+    ],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
