@@ -74,25 +74,7 @@ function Signin() {
       return;
     }
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
-    if (!passwordRegex.test(password)) {
-      const errorMessage =
-        "Password must be at least 6 characters with 1 uppercase letter and 1 digit";
-      setError(errorMessage);
-      toast.error(errorMessage, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
-      setLoading(false);
-      return;
-    }
+    
 
     try {
       const result = await axios.post(
