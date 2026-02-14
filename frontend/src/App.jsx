@@ -30,7 +30,7 @@ import { setSelectedUser, setMessages } from "./redux/messageSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 
-export const serverUrl = "http://localhost:8000";
+export const serverUrl = "https://vibe-backend-iu7n.onrender.com";
 function App() {
   GetCurrentUser();
   GetSuggestedUser();
