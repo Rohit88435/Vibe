@@ -12,7 +12,7 @@ import { setPostData } from "../redux/postSlice";
 import { setCurrentUserStory, setStoryData } from "../redux/storySlice";
 import { setLoopData } from "../redux/loopSlice";
 import { setUserData } from "../redux/UserSlice";
-import VideoPlayer from "../Components/VideoPlayer";
+import VideoPlayer from "../components/VideoPlayer";
 
 function Upload() {
   const navigate = useNavigate();

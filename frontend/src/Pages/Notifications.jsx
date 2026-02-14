@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import NotificationCard from "../Components/NotificationCard";
+import NotificationCard from "../components/NotificationCard";
 import axios from "axios";
 import { serverUrl } from "../App";
 import { setNotificationData } from "../redux/UserSlice";
