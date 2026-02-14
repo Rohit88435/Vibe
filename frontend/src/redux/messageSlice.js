@@ -14,12 +14,18 @@ const messageSlice = createSlice({
     setMessages: (state, action) => {
       state.messages = action.payload;
     },
+    appendMessage: (state, action) => {
+      state.messages = [...(state.messages || []), action.payload];
+    },
     setPreviousChatUsers: (state, action) => {
       state.previousChatUsers = action.payload;
     },
   },
 });
-
-export const { setSelectedUser, setMessages, setPreviousChatUsers } =
-  messageSlice.actions;
+export const {
+  setSelectedUser,
+  setMessages,
+  appendMessage,
+  setPreviousChatUsers,
+} = messageSlice.actions;
 export default messageSlice.reducer;

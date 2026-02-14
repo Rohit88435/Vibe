@@ -35,8 +35,14 @@ export const sendMessage = async (req, res) => {
     }
 
     const receiverSocketId = getSocketId(receiverId);
+    console.log(
+      `sendMessage: sender=${senderId} receiver=${receiverId} receiverSocketId=${receiverSocketId}`,
+    );
     if (receiverSocketId) {
+      console.log(`Emitting newMessage to socket ${receiverSocketId}`);
       io.to(receiverSocketId).emit("newMessage", newMessage);
+    } else {
+      console.log(`Receiver not connected: ${receiverId}`);
     }
 
     return res.status(200).json(newMessage);
