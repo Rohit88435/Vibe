@@ -15,7 +15,7 @@ dotenv.config();
 // middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://vibe-rqrb.onrender.com",
     credentials: true,
   }),
 );
