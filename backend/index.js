@@ -21,6 +21,7 @@ const allowedOrigins = [
 
 app.use(
   cors({
+<<<<<<< HEAD
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -28,6 +29,9 @@ app.use(
         callback(new Error("CORS not allowed for this origin"));
       }
     },
+=======
+    origin: "https://vibe-rqrb.onrender.com",
+>>>>>>> 32250a58a36bf75930ed2aaa9755e24d6d4f8117
     credentials: true,
   }),
 );

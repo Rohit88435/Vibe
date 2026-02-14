@@ -9,10 +9,14 @@ const server = http.createServer(app); // server
 const io = new Server(server, {
   // server
   cors: {
+<<<<<<< HEAD
     origin: [
       "http://localhost:5173", // local dev
       "https://vibe-rqrb.onrender.com", // production frontend
     ],
+=======
+    origin: "https://vibe-rqrb.onrender.com",
+>>>>>>> 32250a58a36bf75930ed2aaa9755e24d6d4f8117
     methods: ["GET", "POST"],
     credentials: true,
   },
