@@ -4,7 +4,7 @@ import FeedHome from "../components/FeedHome";
 import RightHome from "../components/RightHome";
 import GetSuggestedUser from "../hooks/GetSuggestedUser";
 import GetCurrentUser from "../hooks/GetCurrentUser";
-import GetAllPost from "../hooks/getAllPost";
+import GetAllPost from "../hooks/GetAllPost";
 
 function Home() {
   GetCurrentUser();

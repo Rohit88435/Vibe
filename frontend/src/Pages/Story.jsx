@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import { serverUrl } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { setStoryData } from "../redux/storySlice";
-import Storycard from "../components/StoryCard";
-
+import Storycard from "../components/Storycard";
 function Story() {
   const { userName } = useParams();
   const dispatch = useDispatch();
