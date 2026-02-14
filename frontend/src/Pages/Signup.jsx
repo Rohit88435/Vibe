@@ -76,24 +76,7 @@ function Signup() {
       setLoading(false);
       return;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      const errorMessage = "Please enter a valid email address";
-      setError(errorMessage);
-      toast.error(errorMessage, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-      });
-      setLoading(false);
-      return;
-    }
+   
     if (!name.trim()) {
       const errorMessage = "Name is required";
       setError(errorMessage);
