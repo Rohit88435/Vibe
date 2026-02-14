@@ -34,7 +34,7 @@ function FeedHome() {
           <LuMessageSquareText
             className="text-white w-6.25 h-6.25"
             onClick={() => {
-              naviagte("/messages");
+              navigate("/messages");
             }}
           />
         </div>
