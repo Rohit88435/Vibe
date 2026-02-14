@@ -15,41 +15,22 @@ const io = new Server(server, {
 });
 
 const userSocketMap = {};
-const socketIdToUser = {};
 
 export const getSocketId = (receivedId) => {
   return userSocketMap[receivedId];
 };
 
 io.on("connection", (socket) => {
-  // support both legacy query and modern auth
-  const userId =
-    socket.handshake.auth?.userId || socket.handshake.query?.userId;
-  console.log(`Socket connected (raw): socketId=${socket.id} userId=${userId}`);
+  const userId = socket.handshake.query?.userId;
   if (userId) {
     userSocketMap[userId] = socket.id;
-    socketIdToUser[socket.id] = userId;
   }
 
-  // broadcast online users
-  console.log("Online users emit:", Object.keys(userSocketMap));
+  // events for frontend
   io.emit("getonlineuser", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
-    const sid = socket.id;
-    const uid =
-      socketIdToUser[sid] ||
-      socket.handshake.auth?.userId ||
-      socket.handshake.query?.userId;
-    if (uid) {
-      delete userSocketMap[uid];
-    }
-    delete socketIdToUser[sid];
-    console.log(`Socket disconnected: socketId=${sid} userId=${uid}`);
-    console.log(
-      "Online users emit after disconnect:",
-      Object.keys(userSocketMap),
-    );
+    if (userId) delete userSocketMap[userId];
     io.emit("getonlineuser", Object.keys(userSocketMap));
   });
 });
