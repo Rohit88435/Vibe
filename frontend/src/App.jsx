@@ -79,7 +79,7 @@ function App() {
       const senderName = notification?.sender?.userName || "Someone";
       const msg = notification?.message || "sent a notification";
       toast.info(`${senderName} ${msg}`, {
-        position: "top-right",
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
@@ -117,7 +117,7 @@ function App() {
       const toastId = toast.info(
         `${sender.userName || "Someone"} sent you a message`,
         {
-          position: "top-right",
+          position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
