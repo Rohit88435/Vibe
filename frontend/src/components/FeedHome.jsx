@@ -24,7 +24,7 @@ function FeedHome() {
                 navigate("/notifications");
               }}
             >
-              <FaRegHeart className="text-white w-6.25 h-6.25" />
+              <FaRegHeart className="text-white w-6.25 h-6.25 cursor-pointer" />
               {notificationData?.length > 0 &&
                 notificationData.some((noti) => noti.isRead === false) && (
                   <div className="w-2.5 h-2.5 bg-red-600 rounded-full absolute top-0 -right-1.25"></div>
@@ -32,7 +32,7 @@ function FeedHome() {
             </div>
           </div>
           <LuMessageSquareText
-            className="text-white w-6.25 h-6.25"
+            className="text-white w-6.25 h-6.25 cursor-pointer"
             onClick={() => {
               navigate("/messages");
             }}

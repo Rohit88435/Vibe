@@ -22,6 +22,7 @@ function MessageArea() {
   const imageInput = useRef();
   const dispatch = useDispatch();
   const { onLineUsers } = useSelector((state) => state.socket);
+  const messagesEndRef = useRef(null);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -80,10 +81,12 @@ function MessageArea() {
     }
   }, [selectedUser._id]);
 
+  // Auto-scroll to latest message when messages change
   useEffect(() => {
-    // newMessage is handled globally in App.jsx now
-    return () => {};
-  }, [messages, setMessages]);
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div className="w-full h-screen bg-black relative">
@@ -133,6 +136,7 @@ function MessageArea() {
               <ReceiverMessage key={mess._id || index} message={mess} />
             ),
           )}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="w-full h-20 fixed bottom-0 flex justify-center items-center bg-black z-100">

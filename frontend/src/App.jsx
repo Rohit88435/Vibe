@@ -29,8 +29,10 @@ import { setNotificationData, addNotification } from "./redux/UserSlice";
 import { setSelectedUser, setMessages } from "./redux/messageSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
+import { useSound } from "./hooks/useSound";
 
-export const serverUrl = "http://localhost:8000";
+export const serverUrl =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 function App() {
   GetCurrentUser();
   GetSuggestedUser();
@@ -46,6 +48,7 @@ function App() {
     (state) => state.message,
   );
 
+  const { playSound } = useSound();
   const dispatch = useDispatch();
   const socketRef = useRef(null);
   const location = useLocation();
@@ -57,9 +60,10 @@ function App() {
     if (socketRef.current) return;
 
     socketRef.current = io(serverUrl, {
-      query: {
-        userId: userData._id,
-      },
+      // use auth so server receives handshake.auth.userId reliably
+      auth: { userId: userData._id },
+      withCredentials: true,
+      transports: ["websocket"],
     });
 
     const s = socketRef.current;
@@ -72,23 +76,32 @@ function App() {
       console.log("Online users:", users);
     });
 
+    s.on("connect", () => {
+      console.log("socket connected", s.id);
+    });
+    s.on("connect_error", (err) => {
+      console.error("socket connect_error", err);
+    });
+
     // Listen for notifications
     s.on("newNotification", (notification) => {
       console.log("New notification received:", notification);
       dispatch(addNotification(notification));
       const senderName = notification?.sender?.userName || "Someone";
       const msg = notification?.message || "sent a notification";
-      toast.info(`${senderName} ${msg}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      console.log(`Notification: ${senderName} ${msg}`);
+
+      // Play sound based on notification type
+      if (notification?.type === "like") {
+        playSound("like");
+        toast.success("liked your post");
+      } else if (notification?.type === "comment") {
+        playSound("comment");
+        toast.success("Commented your post");
+      } else if (notification?.type === "follow") {
+        playSound("follow");
+        toast.success("Started following you");
+      }
     });
 
     // Listen for incoming messages and show toast/navigation when appropriate
@@ -113,37 +126,74 @@ function App() {
       );
       const sender = senderFromPrev || senderFromFollowing || { _id: senderId };
 
-      // show toast with click handler to open message area and select user
-      const toastId = toast.info(
-        `${sender.userName || "Someone"} sent you a message`,
-        {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-          onClick: () => {
-            dispatch(setSelectedUser(sender));
-            navigate("/messagearea");
-            toast.dismiss(toastId);
-          },
-        },
-      );
+      console.log(`${sender.userName || "Someone"} sent you a message`);
     });
 
     // Cleanup when user logs out or component unmounts
     return () => {
       s.off("getonlineuser");
       s.off("newNotification");
+      s.off("newMessage");
       dispatch(setSocket(null));
       s.disconnect();
       socketRef.current = null;
     };
-  }, [userData?._id, dispatch]);
+  }, [
+    userData?._id,
+    dispatch,
+    location.pathname,
+    selectedUser?._id,
+    messages,
+    previousChatUsers,
+    userData?.following,
+    playSound,
+  ]);
+
+  // Separate effect to update newMessage listener when dependencies change
+  useEffect(() => {
+    if (!socketRef.current) return;
+
+    const s = socketRef.current;
+
+    // Remove old listener
+    s.off("newMessage");
+
+    // Add updated listener with current state values
+    s.on("newMessage", (mess) => {
+      const senderId = mess.sender?.toString();
+
+      // if user is on message area and selected user is the sender, append message silently
+      if (
+        location.pathname === "/messagearea" &&
+        selectedUser?._id === senderId
+      ) {
+        dispatch(setMessages([...(messages || []), mess]));
+        return;
+      }
+
+      // try to resolve sender info from previous chats or following
+      const senderFromPrev = (previousChatUsers || []).find(
+        (u) => String(u._id) === String(senderId),
+      );
+      const senderFromFollowing = (userData?.following || []).find(
+        (u) => String(u._id) === String(senderId),
+      );
+      const sender = senderFromPrev || senderFromFollowing || { _id: senderId };
+
+      console.log(`${sender.userName || "Someone"} sent you a message`);
+    });
+
+    return () => {
+      s.off("newMessage");
+    };
+  }, [
+    location.pathname,
+    selectedUser?._id,
+    messages,
+    previousChatUsers,
+    userData?.following,
+    dispatch,
+  ]);
 
   return (
     <>

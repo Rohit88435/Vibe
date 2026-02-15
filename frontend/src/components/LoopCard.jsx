@@ -19,7 +19,7 @@ function LoopCard({ loop }) {
   const { loopData } = useSelector((state) => state.loop);
   const { socket } = useSelector((state) => state.socket);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [mute, setMute] = useState(true);
+  const [mute, setMute] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showHeart, setShowHeart] = useState(false);
   const [message, setMessage] = useState("");

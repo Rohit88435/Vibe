@@ -129,6 +129,7 @@ function ForgotPassword() {
         theme: "light",
         transition: Bounce,
       });
+
       setStep(3);
     } catch (error) {
       console.log("stpe2 " + error);
