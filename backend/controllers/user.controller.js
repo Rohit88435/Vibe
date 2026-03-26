@@ -63,7 +63,11 @@ export const editProfile = async (req, res) => {
     }
     user.bio = bio;
     user.profession = profession;
-    user.gender = gender;
+
+    const validGenderValues = ["male", "female"];
+    if (gender && validGenderValues.includes(String(gender).toLowerCase())) {
+      user.gender = String(gender).toLowerCase();
+    }
 
     await user.save();
 
@@ -191,8 +195,8 @@ export const search = async (req, res) => {
 
     const user = await User.find({
       $or: [
-        { userName: { $regex: keyword, $option: "i" } },
-        { name: { $regex: keyword, $option: "i" } },
+        { userName: { $regex: keyword, $options: "i" } },
+        { name: { $regex: keyword, $options: "i" } },
       ],
     }).select("-password");
 

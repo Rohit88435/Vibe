@@ -21,7 +21,7 @@ function EditProfile() {
   const [userName, setUserName] = useState(userData?.userName);
   const [profession, setProfession] = useState(userData?.profession);
   const [bio, setBio] = useState(userData?.bio);
-  const [gender, setGender] = useState(userData?.gender);
+  const [gender, setGender] = useState(userData?.gender || "");
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -39,7 +39,9 @@ function EditProfile() {
       formdata.append("userName", userName);
       formdata.append("bio", bio);
       formdata.append("profession", profession);
-      formdata.append("gender", gender);
+      if (gender) {
+        formdata.append("gender", gender);
+      }
       if (backendImage) {
         formdata.append("profileImage", backendImage);
       }
@@ -131,15 +133,17 @@ function EditProfile() {
           setBio(e.target.value);
         }}
       />
-      <input
-        type="text"
-        className="w-[90%] max-w-150 h-14 bg-[#0a1010] border-2 border-gray-700 rounded-2xl outline-none placeholder:text-gray-400 px-2.5 text-white "
-        placeholder="Gender"
+      <select
+        className="w-[90%] max-w-150 h-14 bg-[#0a1010] border-2 border-gray-700 rounded-2xl outline-none placeholder:text-gray-400 px-2.5 text-white"
         value={gender}
         onChange={(e) => {
           setGender(e.target.value);
         }}
-      />
+      >
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
 
       <button
         className="px-2.5 w-[66%] max-w-100 py-1.25 h-12.5 bg-white cursor-pointer rounded-2xl font-medium text-[18px]"
