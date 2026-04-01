@@ -10,7 +10,7 @@ import GetSuggestedUser from "./hooks/GetSuggestedUser";
 import Profile from "./Pages/Profile";
 import EditProfile from "./Pages/EditProfile";
 import Upload from "./Pages/Upload";
-import GetAllPost from "./hooks/getAllPost";
+import GetAllPost from "./hooks/GetAllPost";
 import Loops from "./Pages/Loops";
 import GetAllLoops from "./hooks/GetAllLoops";
 import Story from "./Pages/Story";
